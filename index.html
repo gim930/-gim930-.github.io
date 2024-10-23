@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김시후의 경우의 수 계산기</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #00796b;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-top: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #00796b;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #004d40;
+            transform: translateY(-3px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.3em;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h1>김시후의 경우의 수 계산기</h1>
+
+        <label for="n">전체 항목 수 (n):</label>
+        <input type="number" id="n" min="0" placeholder="n 값을 입력하세요"><br>
+
+        <label for="r">선택할 항목 수 (r):</label>
+        <input type="number" id="r" min="0" placeholder="r 값을 입력하세요"><br>
+
+        <label for="type">계산 유형:</label>
+        <select id="type">
+            <option value="permutation">순열 (nPr)</option>
+            <option value="combination">조합 (nCr)</option>
+        </select><br>
+
+        <button onclick="calculate()">계산하기</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function factorial(num) {
+            if (num === 0 || num === 1) return 1;
+            return num * factorial(num - 1);
+        }
+
+        function calculate() {
+            const n = parseInt(document.getElementById('n').value);
+            const r = parseInt(document.getElementById('r').value);
+            const type = document.getElementById('type').value;
+            let result = '';
+
+            if (isNaN(n) || isNaN(r) || n < 0 || r < 0 || r > n) {
+                result = '올바른 값을 입력하세요!';
+            } else {
+                if (type === 'permutation') {
+                    result = `순열 (nPr): ${factorial(n) / factorial(n - r)}`;
+                } else if (type === 'combination') {
+                    result = `조합 (nCr): ${factorial(n) / (factorial(r) * factorial(n - r))}`;
+                }
+            }
+
+            document.getElementById('result').innerHTML = result;
+        }
+    </script>
+
+</body>
+</html>
